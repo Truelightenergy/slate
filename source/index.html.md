@@ -15,3 +15,4 @@ search: true
 # Introduction
 
 The Truelight Energy API is a simple, REST API that allows clients to send
+Account usage data and receive Account pricing data.
