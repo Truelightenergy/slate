@@ -5,7 +5,7 @@ by the Truelight team.
 
 ```shell
 curl -X GET -H "Authorization: Token token=MY_TRUELIGHT_TOKEN" -H "Cache-Control:
-no-cache" "https://truelight.com/api/accounts"
+no-cache" "https://app.truelightenergy.com/api/accounts"
 ```
 
 > Make sure to replace `MY_TRUELIGHT_TOKEN` with your API token.

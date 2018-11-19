@@ -3,7 +3,7 @@
 ## Create an account
 
 ```shell
-curl -X POST "https://truelight.com/api/accounts"
+curl -X POST "https://app.truelightenergy.com/api/accounts"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": { "number":
 "1234", "location": "11 Beacon St.", "state":
@@ -37,7 +37,7 @@ This endpoint creates an account
 
 ### HTTP Request
 
-`POST https://truelight.com/api/accounts`
+`POST https://app.truelightenergy.com/api/accounts`
 
 ### Parameters
 
@@ -76,7 +76,7 @@ An unsuccessful POST will return an HTTP 422 and validation error
 This endpoint returns an individual account
 
 ```shell
-curl "https://truelight.com/api/accounts/<ACCOUNT_ID>"
+curl "https://app.truelightenergy.com/api/accounts/<ACCOUNT_ID>"
   -H "Authorization: Token token=MY_TRUELIGHT_TOKEN"
 ```
 
@@ -96,7 +96,7 @@ curl "https://truelight.com/api/accounts/<ACCOUNT_ID>"
 
 ### HTTP Request
 
-`GET https://truelight.com/api/accounts/<ACCOUNT_ID>`
+`GET https://app.truelightenergy.com/api/accounts/<ACCOUNT_ID>`
 
 ### URL Parameters
 
@@ -142,7 +142,7 @@ Updating an account with new usage data erases all existing usage data
 </aside>
 
 ```shell
-curl -X PATCH "https://truelight.com/api/accounts/<ACCOUNT_ID>"
+curl -X PATCH "https://app.truelightenergy.com/api/accounts/<ACCOUNT_ID>"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": {
 summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
@@ -166,7 +166,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 
 ### HTTP Request
 
-`PATCH https://truelight.com/api/accounts/<ACCOUNT_ID>`
+`PATCH https://app.truelightenergy.com/api/accounts/<ACCOUNT_ID>`
 
 ### URL Parameters
 
