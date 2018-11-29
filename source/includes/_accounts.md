@@ -6,9 +6,9 @@
 curl -X POST "http://truelight.herokuapp.com/api/accounts"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": { "number":
-"1234", "location": "11 Beacon St.", "state":
-"MA", "load_zone": "SEMASS", "utility": "MECO", "load_profile": "G-3",
-"voltage": "Primary", "rate_class": "R-1", "capacity_tag_kw": "60000",
+"1234", "location": "11 Beacon St.", "city": "Philadelphia", "state":
+"PA", "load_zone": "APS-PA", "utility": "WPP", "load_profile": "GPC",
+"voltage": "Primary", "rate_class": "10", "capacity_tag_kw": "60000",
 "transmission_tag_kw": "100000", summary_usage_attributes: [{ "starts_on":
 "2018-10-1", "ends_on": "2018-10-31", "volume_kwh": "925.24"}] } }'
 ```
