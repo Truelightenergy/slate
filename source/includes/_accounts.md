@@ -106,11 +106,11 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 
 ### Response Parameters
 
- | Parameter    | Description                                                      |
- | ------------ | ---------------------------------------------------------------- |
- | id           | The ID of the account                                            |
- | status       | The intervalization status of the account (more below)           |
- | rt_lmp_price | The RT LMP price per mWh for the account - if available - or N/A |
+| Parameter    | Description                                                      |
+| ------------ | ---------------------------------------------------------------- |
+| id           | The ID of the account                                            |
+| status       | The intervalization status of the account (more below)           |
+| rt_lmp_price | The RT LMP price per mWh for the account - if available - or N/A |
 
 ### Account status
 The account's intervalization status can be one of "usageless", "intervalizing",
