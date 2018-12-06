@@ -5,7 +5,7 @@
 ```shell
 curl -X POST "http://truelight.herokuapp.com/api/accounts"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
-  --header "Content-Type: application/json" -d '{ "account": { "number":
+  --header "Content-Type: application/json" -d '{ "account": { "account_number":
 "1234", "location": "11 Beacon St.", "city": "Philadelphia", "state":
 "PA", "load_zone": "APS-PA", "utility": "WPP", "load_profile": "GPC",
 "voltage": "Primary", "rate_class": "10", "capacity_tag_kw": "60000",
@@ -43,7 +43,7 @@ This endpoint creates an account
 
 | Parameter                | Required | Default | Description                                         |
 | ------------------------ | -------  | ------- | --------------------------------------------------- |
-| number                   | true     | N/A     | The account number                                  |
+| account_number           | true     | N/A     | The account number                                  |
 | location                 | true     | N/A     | The address lines 1 & 2 for the account             |
 | state                    | true     | N/A     | The account geographic state's 2 digit abbreviation |
 | load_zone                | true     | N/A     | The account's load zone                             |
@@ -51,7 +51,7 @@ This endpoint creates an account
 | load_profile             | true     | N/A     | The account's load profile                          |
 | voltage                  | true     | N/A     | The account's voltage                               |
 | rate_class               | true     | N/A     | The account's rate class                            |
-| summary_usage_attributes | true     | N/A     | An array of summary usage parameters (more below)   |
+| summary_usage_attributes | false    | N/A     | An array of summary usage parameters (more below)   |
 | capacity_tag_kw          | false    | 0       | The account's capacity tag in kWh                   |
 | transmission_tag_kw      | false    | 0       | The account's transmission tag in kWh               |
 
@@ -137,10 +137,6 @@ An unsuccessful GET will return an HTTP 404
 
 This endpoint updates an individual account
 
-<aside class="warning">
-Updating an account with new usage data erases all existing usage data
-</aside>
-
 ```shell
 curl -X PATCH "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
@@ -172,7 +168,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 
 | Parameter                | Required | Default | Description                                         |
 | ------------------------ | -------- | ------- | --------------------------------------------------- |
-| number                   | true     | N/A     | The account number                                  |
+| account_number           | true     | N/A     | The account number                                  |
 | location                 | true     | N/A     | The address lines 1 & 2 for the account             |
 | state                    | true     | N/A     | The account geographic state's 2 digit abbreviation |
 | load_zone                | true     | N/A     | The account's load zone                             |
@@ -180,7 +176,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 | load_profile             | true     | N/A     | The account's load profile                          |
 | voltage                  | true     | N/A     | The account's voltage                               |
 | rate_class               | true     | N/A     | The account's rate class                            |
-| summary_usage_attributes | true     | N/A     | An array of summary usage parameters (more below)   |
+| summary_usage_attributes | false    | N/A     | An array of summary usage parameters (more below)   |
 | capacity_tag_kw          | false    | 0       | The account's capacity tag in kWh                   |
 | transmission_tag_kw      | false    | 0       | The account's transmission tag in kWh               |
 
