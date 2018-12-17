@@ -20,7 +20,7 @@ curl -X POST "http://truelight.herokuapp.com/api/accounts"
   "account": {
     "id": 1,
     "intervalization_status": "usageless",
-    "rt_lmp_price": "N/A"
+    "rt_lmp_price": null
   }
 }
 ```
@@ -54,8 +54,8 @@ This endpoint creates an account
 | summary_usage_attributes | false    | N/A     | An array of summary usage parameters (more below)   |
 | capacity_tag_kw          | false    | 0       | The account's capacity tag in kWh                   |
 | transmission_tag_kw      | false    | 0       | The account's transmission tag in kWh               |
-| flow_start               | false    | N/A     | The account's flow start date (YYYY-MM-DD)          |
-| flow_end                 | false    | N/A     | The account's flow end date (YYYY-MM-DD)            |
+| flow_start               | false    | N/A     | The account's flow start date (YYYY-M-D)            |
+| flow_end                 | false    | N/A     | The account's flow end date (YYYY-M-D)              |
 
 ### Summary Usage Parameters
 
@@ -161,7 +161,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
   "account": {
     "id": 1,
     "intervalization_status": "intervalizing",
-    "rt_lmp_price": "N/A",
+    "rt_lmp_price": null,
     "flow_start": null,
     "flow_end": null,
   }
@@ -187,8 +187,8 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 | summary_usage_attributes | false    | N/A     | An array of summary usage parameters (more below)   |
 | capacity_tag_kw          | false    | 0       | The account's capacity tag in kWh                   |
 | transmission_tag_kw      | false    | 0       | The account's transmission tag in kWh               |
-| flow_start               | false    | N/A     | The account's flow start date (YYYY-MM-DD)          |
-| flow_end                 | false    | N/A     | The account's flow end date (YYYY-MM-DD)            |
+| flow_start               | false    | N/A     | The account's flow start date (YYYY-M-D)            |
+| flow_end                 | false    | N/A     | The account's flow end date (YYYY-M-D)              |
 
 ### Summary Usage Parameters
 
