@@ -19,7 +19,7 @@ curl -X POST "http://truelight.herokuapp.com/api/accounts"
 {
   "account": {
     "id": 1,
-    "status": "usageless",
+    "intervalization_status": "usageless",
     "rt_lmp_price": "N/A"
   }
 }
@@ -88,7 +88,7 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 {
   "account": {
     "id": 1,
-    "status": "intervalized",
+    "intervalization_status": "intervalized",
     "rt_lmp_price": "28.8792"
   }
 }
@@ -106,24 +106,24 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 
 ### Response Parameters
 
-| Parameter    | Description                                                      |
-| ------------ | ---------------------------------------------------------------- |
-| id           | The ID of the account                                            |
-| status       | The intervalization status of the account (more below)           |
-| rt_lmp_price | The RT LMP price per mWh for the account - if available - or N/A |
+| Parameter                    | Description                                                      |
+| ---------------------------- | ---------------------------------------------------------------- |
+| id                           | The ID of the account                                            |
+| intervalization_status       | The intervalization status of the account (more below)           |
+| rt_lmp_price                 | The RT LMP price per mWh for the account - if available - or N/A |
 
-### Account status
+### Account intervalization status
 The account's intervalization status can be one of "usageless", "intervalizing",
 "intervalized", or "intervalization_error".
 
-* If we have no usage data the status is
+* If we have no usage data the intervalization status is
 "usageless".
 * If we're currently creating interval usage data in the background the
-status is "intervalizing".
-* If we have interval usage data the status is
+intervalization status is "intervalizing".
+* If we have interval usage data the intervalization status is
 "intervalized".
 * Finally, if there was an error generating the interval data the
-status is "intervalization_error".
+intervalization status is "intervalization_error".
 
 <aside class="success">
 A successful GET will return an HTTP 200
@@ -154,7 +154,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 {
   "account": {
     "id": 1,
-    "status": "intervalizing",
+    "intervalization_status": "intervalizing",
     "rt_lmp_price": "N/A"
   }
 }
@@ -190,11 +190,11 @@ volume_kwh | true | The volume in kWh during the usage period
 
 ### Response Parameters
 
-| Parameter    | Description                                                      |
-| ------------ | ---------------------------------------------------------------- |
-| id           | The ID of the account                                            |
-| status       | The intervalization status of the account (more below)           |
-| rt_lmp_price | The RT LMP price per mWh for the account - if available - or N/A |
+| Parameter                    | Description                                                      |
+| ---------------------------- | ---------------------------------------------------------------- |
+| id                           | The ID of the account                                            |
+| intervalization_status       | The intervalization status of the account (more below)           |
+| rt_lmp_price                 | The RT LMP price per mWh for the account - if available - or N/A |
 
 <aside class="success">
 A successful PATCH will return an HTTP 200
