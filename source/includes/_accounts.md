@@ -8,20 +8,39 @@ curl -X POST "http://truelight.herokuapp.com/api/accounts"
   --header "Content-Type: application/json" -d '{ "account": { "account_number":
 "1234", "location": "11 Beacon St.", "city": "Philadelphia", "state":
 "PA", "load_zone": "APS-PA", "utility": "WPP", "load_profile": "GPC",
-"voltage": "Primary", "rate_class": "10", "capacity_tag_kw": "60000",
-"transmission_tag_kw": "100000", summary_usage_attributes: [{ "starts_on":
-"2018-10-1", "ends_on": "2018-10-31", "volume_kwh": "925.24"}] } }'
+"voltage": "Primary", "rate_class": "10", "summary_usage_attributes": [{ "starts_on":
+"2018-10-1", "ends_on": "2018-10-31", "volume_kwh": "925.24"}],
+"capacity_tags_attributes": [{ "start_date": "2018-6-1", "end_date": "2019-5-31",
+"value_kw": "60000" }], "transmission_tags_attributes": [{ "start_date":
+"2018-1-1", "end_date: "2018-12-31", "value_kw": "100000" }] } }'
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "account": {
-    "id": 1,
-    "intervalization_status": "usageless",
-    "rt_lmp_price": null
-  }
+  "id": 1,
+  "status": "active",
+  "intervalization_status": "usageless",
+  "rt_lmp_price": null,
+  "flow_start": null,
+  "flow_end": null,
+  "capacity_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-6-1",
+      "end_date": "2019-5-31",
+      "value_kw": 60000
+    }
+  ],
+  "transmission_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-1-1",
+      "end_date": "2018-12-31",
+      "value_kw": 100000
+    }
+  ]
 }
 ```
 
@@ -41,21 +60,21 @@ This endpoint creates an account
 
 ### Parameters
 
-| Parameter                | Required | Default | Description                                         |
-| ------------------------ | -------  | ------- | --------------------------------------------------- |
-| account_number           | true     | N/A     | The account number                                  |
-| location                 | true     | N/A     | The address lines 1 & 2 for the account             |
-| state                    | true     | N/A     | The account geographic state's 2 digit abbreviation |
-| load_zone                | true     | N/A     | The account's load zone                             |
-| utility                  | true     | N/A     | The account's utility                               |
-| load_profile             | true     | N/A     | The account's load profile                          |
-| voltage                  | true     | N/A     | The account's voltage                               |
-| rate_class               | true     | N/A     | The account's rate class                            |
-| summary_usage_attributes | false    | N/A     | An array of summary usage parameters (more below)   |
-| capacity_tag_kw          | false    | 0       | The account's capacity tag in kWh                   |
-| transmission_tag_kw      | false    | 0       | The account's transmission tag in kWh               |
-| flow_start               | false    | N/A     | The account's flow start date (YYYY-M-D)            |
-| flow_end                 | false    | N/A     | The account's flow end date (YYYY-M-D)              |
+| Parameter                    | Required | Default | Description                                          |
+| ---------------------------- | -------- | ------- | ---------------------------------------------------- |
+| account_number               | true     | N/A     | The account number                                   |
+| location                     | true     | N/A     | The address lines 1 & 2 for the account              |
+| state                        | true     | N/A     | The account geographic state's 2 digit abbreviation  |
+| load_zone                    | true     | N/A     | The account's load zone                              |
+| utility                      | true     | N/A     | The account's utility                                |
+| load_profile                 | true     | N/A     | The account's load profile                           |
+| voltage                      | true     | N/A     | The account's voltage                                |
+| rate_class                   | true     | N/A     | The account's rate class                             |
+| summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
+| capacity_tags_attributes     | false    | 0       | An array of capacity tag parameters (more below)     |
+| transmission_tags_attributes | false    | 0       | An array of transmission tag parameters (more below) |
+| flow_start                   | false    | N/A     | The account's flow start date (YYYY-M-D)             |
+| flow_end                     | false    | N/A     | The account's flow end date (YYYY-M-D)               |
 
 ### Summary Usage Parameters
 
@@ -64,6 +83,22 @@ This endpoint creates an account
 | starts_on  | true     | The date the usage starts on in format "YYYY-M-D" |
 | ends_on    | true     | The date the usage ends on in format "YYYY-M-D"   |
 | volume_kwh | true     | The volume in kWh during the usage period         |
+
+### Capacity Tag Parameters
+
+| Parameter  | Required | Description                                     |
+| ---------- | -------- | ----------------------------------------------- |
+| start_date | true     | The date the tag starts on in format "YYYY-M-D" |
+| end_date   | true     | The date the tag ends on in format "YYYY-M-D"   |
+| value_kw   | true     | The value of the tag in kw                      |
+
+### Transmission Tag Parameters
+
+| Parameter  | Required | Description                                     |
+| ---------- | -------- | ----------------------------------------------- |
+| start_date | true     | The date the tag starts on in format "YYYY-M-D" |
+| end_date   | true     | The date the tag ends on in format "YYYY-M-D"   |
+| value_kw   | true     | The value of the tag in kw                      |
 
 <aside class="success">
 A successful POST will return an HTTP 201
@@ -88,13 +123,28 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 
 ```json
 {
-  "account": {
-    "id": 1,
-    "intervalization_status": "intervalized",
-    "rt_lmp_price": "28.8792",
-    "flow_start": null,
-    "flow_end": null,
-  }
+  "id": 1,
+  "status": "active",
+  "intervalization_status": "intervalized",
+  "rt_lmp_price": "28.8792",
+  "flow_start": null,
+  "flow_end": null,
+  "capacity_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-6-1",
+      "end_date": "2019-5-31",
+      "value_kw": 60000
+    }
+  ],
+  "transmission_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-1-1",
+      "end_date": "2018-12-31",
+      "value_kw": 100000
+    }
+  ]
 }
 ```
 
@@ -110,13 +160,16 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 
 ### Response Parameters
 
-| Parameter                    | Description                                                       |
-| ---------------------------- | ----------------------------------------------------------------- |
-| id                           | The ID of the account                                             |
-| intervalization_status       | The intervalization status of the account (more below)            |
-| rt_lmp_price                 | The RT LMP prices the account                                     |
-| flow_start                   | The account's flow start date                                     |
-| flow_end                     | The account's flow end date                                       |
+| Parameter                    | Description                                            |
+| ---------------------------- | ------------------------------------------------------ |
+| id                           | The ID of the account                                  |
+| status                       | The account status ("active" or "inactive")            |
+| intervalization_status       | The intervalization status of the account (more below) |
+| rt_lmp_price                 | The RT LMP prices the account                          |
+| flow_start                   | The account's flow start date                          |
+| flow_end                     | The account's flow end date                            |
+| capacity_tags                | An array of the account's capacity tags                |
+| transmission_tags            | An array of the account's transmission tags            |
 
 ### Account intervalization status
 The account's intervalization status can be one of "usageless", "intervalizing",
@@ -158,13 +211,28 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 
 ```json
 {
-  "account": {
-    "id": 1,
-    "intervalization_status": "intervalizing",
-    "rt_lmp_price": null,
-    "flow_start": null,
-    "flow_end": null,
-  }
+  "id": 1,
+  "status": "active",
+  "intervalization_status": "intervalizing",
+  "rt_lmp_price": null,
+  "flow_start": null,
+  "flow_end": null,
+  "capacity_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-6-1",
+      "end_date": "2019-5-31",
+      "value_kw": 60000
+    }
+  ],
+  "transmission_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-1-1",
+      "end_date": "2018-12-31",
+      "value_kw": 100000
+    }
+  ]
 }
 ```
 
@@ -172,41 +240,52 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 
 `PATCH http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>`
 
-### URL Parameters
+### Parameters
 
-| Parameter                | Required | Default | Description                                         |
-| ------------------------ | -------- | ------- | --------------------------------------------------- |
-| account_number           | true     | N/A     | The account number                                  |
-| location                 | true     | N/A     | The address lines 1 & 2 for the account             |
-| state                    | true     | N/A     | The account geographic state's 2 digit abbreviation |
-| load_zone                | true     | N/A     | The account's load zone                             |
-| utility                  | true     | N/A     | The account's utility                               |
-| load_profile             | true     | N/A     | The account's load profile                          |
-| voltage                  | true     | N/A     | The account's voltage                               |
-| rate_class               | true     | N/A     | The account's rate class                            |
-| summary_usage_attributes | false    | N/A     | An array of summary usage parameters (more below)   |
-| capacity_tag_kw          | false    | 0       | The account's capacity tag in kWh                   |
-| transmission_tag_kw      | false    | 0       | The account's transmission tag in kWh               |
-| flow_start               | false    | N/A     | The account's flow start date (YYYY-M-D)            |
-| flow_end                 | false    | N/A     | The account's flow end date (YYYY-M-D)              |
+| Parameter                    | Required | Default | Description                                          |
+| ---------------------------- | -------- | ------- | ---------------------------------------------------- |
+| account_number               | true     | N/A     | The account number                                   |
+| location                     | true     | N/A     | The address lines 1 & 2 for the account              |
+| state                        | true     | N/A     | The account geographic state's 2 digit abbreviation  |
+| load_zone                    | true     | N/A     | The account's load zone                              |
+| utility                      | true     | N/A     | The account's utility                                |
+| load_profile                 | true     | N/A     | The account's load profile                           |
+| voltage                      | true     | N/A     | The account's voltage                                |
+| rate_class                   | true     | N/A     | The account's rate class                             |
+| summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
+| capacity_tags_attributes     | false    | 0       | An array of capacity tag parameters (more below)     |
+| transmission_tags_attributes | false    | 0       | An array of transmission tag parameters (more below) |
+| flow_start                   | false    | N/A     | The account's flow start date (YYYY-M-D)             |
+| flow_end                     | false    | N/A     | The account's flow end date (YYYY-M-D)               |
 
 ### Summary Usage Parameters
 
-Parameter | Required | Description
---------- | ------- | -----------
-starts_on | true | The date the usage starts on in format "YYYY-M-D"
-ends_on | true | The date the usage ends on in format "YYYY-M-D"
-volume_kwh | true | The volume in kWh during the usage period
+| Parameter  | Required | Description                                       |
+| ---------- | -------- | ------------------------------------------------- |
+| starts_on  | true     | The date the usage starts on in format "YYYY-M-D" |
+| ends_on    | true     | The date the usage ends on in format "YYYY-M-D"   |
+| volume_kwh | true     | The volume in kWh during the usage period         |
+
+### Capacity Tag Parameters
+
+| Parameter  | Required | Description                                     |
+| ---------- | -------- | ----------------------------------------------- |
+| start_date | true     | The date the tag starts on in format "YYYY-M-D" |
+| end_date   | true     | The date the tag ends on in format "YYYY-M-D"   |
+| value_kw   | true     | The value of the tag in kw                      |
 
 ### Response Parameters
 
-| Parameter                    | Description                                                      |
-| ---------------------------- | ---------------------------------------------------------------- |
-| id                           | The ID of the account                                            |
-| intervalization_status       | The intervalization status of the account (more below)           |
-| rt_lmp_price                 | The RT LMP prices the account                                     |
-| flow_start                   | The account's flow start date                                     |
-| flow_end                     | The account's flow end date                                       |
+| Parameter                    | Description                                            |
+| ---------------------------- | ------------------------------------------------------ |
+| id                           | The ID of the account                                  |
+| status                       | The account status ("active" or "inactive")            |
+| intervalization_status       | The intervalization status of the account (more below) |
+| rt_lmp_price                 | The RT LMP prices the account                          |
+| flow_start                   | The account's flow start date                          |
+| flow_end                     | The account's flow end date                            |
+| capacity_tags                | An array of the account's capacity tags                |
+| transmission_tags            | An array of the account's transmission tags            |
 
 <aside class="success">
 A successful PATCH will return an HTTP 200
@@ -228,6 +307,35 @@ status: "inactive" } }'
 ```
 
 > Make sure you replace `MY_TRUELIGHT_TOKEN` with your API token
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": 1,
+  "status": "inactive",
+  "intervalization_status": "intervalizing",
+  "rt_lmp_price": null,
+  "flow_start": null,
+  "flow_end": null,
+  "capacity_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-6-1",
+      "end_date": "2019-5-31",
+      "value_kw": 60000
+    }
+  ],
+  "transmission_tags": [
+    {
+      "id": 1,
+      "start_date": "2018-1-1",
+      "end_date": "2018-12-31",
+      "value_kw": 100000
+    }
+  ]
+}
+```
 
 ### HTTP Request
 
