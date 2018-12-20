@@ -71,8 +71,8 @@ This endpoint creates an account
 | voltage                      | true     | N/A     | The account's voltage                                |
 | rate_class                   | true     | N/A     | The account's rate class                             |
 | summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
-| capacity_tags_attributes     | false    | 0       | An array of capacity tag parameters (more below)     |
-| transmission_tags_attributes | false    | 0       | An array of transmission tag parameters (more below) |
+| capacity_tags_attributes     | true     | N/A     | An array of capacity tag parameters (more below)     |
+| transmission_tags_attributes | true     | N/A     | An array of transmission tag parameters (more below) |
 | flow_start                   | false    | N/A     | The account's flow start date (YYYY-M-D)             |
 | flow_end                     | false    | N/A     | The account's flow end date (YYYY-M-D)               |
 
@@ -253,8 +253,8 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 | voltage                      | true     | N/A     | The account's voltage                                |
 | rate_class                   | true     | N/A     | The account's rate class                             |
 | summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
-| capacity_tags_attributes     | false    | 0       | An array of capacity tag parameters (more below)     |
-| transmission_tags_attributes | false    | 0       | An array of transmission tag parameters (more below) |
+| capacity_tags_attributes     | false    | N/A     | An array of capacity tag parameters (more below)     |
+| transmission_tags_attributes | false    | N/A     | An array of transmission tag parameters (more below) |
 | flow_start                   | false    | N/A     | The account's flow start date (YYYY-M-D)             |
 | flow_end                     | false    | N/A     | The account's flow end date (YYYY-M-D)               |
 
@@ -267,6 +267,14 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 | volume_kwh | true     | The volume in kWh during the usage period         |
 
 ### Capacity Tag Parameters
+
+| Parameter  | Required | Description                                     |
+| ---------- | -------- | ----------------------------------------------- |
+| start_date | true     | The date the tag starts on in format "YYYY-M-D" |
+| end_date   | true     | The date the tag ends on in format "YYYY-M-D"   |
+| value_kw   | true     | The value of the tag in kw                      |
+
+### Transmission Tag Parameters
 
 | Parameter  | Required | Description                                     |
 | ---------- | -------- | ----------------------------------------------- |
