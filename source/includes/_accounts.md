@@ -244,14 +244,14 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 
 | Parameter                    | Required | Default | Description                                          |
 | ---------------------------- | -------- | ------- | ---------------------------------------------------- |
-| account_number               | true     | N/A     | The account number                                   |
-| location                     | true     | N/A     | The address lines 1 & 2 for the account              |
-| state                        | true     | N/A     | The account geographic state's 2 digit abbreviation  |
-| load_zone                    | true     | N/A     | The account's load zone                              |
-| utility                      | true     | N/A     | The account's utility                                |
-| load_profile                 | true     | N/A     | The account's load profile                           |
-| voltage                      | true     | N/A     | The account's voltage                                |
-| rate_class                   | true     | N/A     | The account's rate class                             |
+| account_number               | false    | N/A     | The account number                                   |
+| location                     | false    | N/A     | The address lines 1 & 2 for the account              |
+| state                        | false    | N/A     | The account geographic state's 2 digit abbreviation  |
+| load_zone                    | false    | N/A     | The account's load zone                              |
+| utility                      | false    | N/A     | The account's utility                                |
+| load_profile                 | false    | N/A     | The account's load profile                           |
+| voltage                      | false    | N/A     | The account's voltage                                |
+| rate_class                   | false    | N/A     | The account's rate class                             |
 | summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
 | capacity_tags_attributes     | false    | N/A     | An array of capacity tag parameters (more below)     |
 | transmission_tags_attributes | false    | N/A     | An array of transmission tag parameters (more below) |
