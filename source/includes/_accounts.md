@@ -126,7 +126,19 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
   "id": 1,
   "status": "active",
   "intervalization_status": "intervalized",
-  "rt_lmp_price": "28.8792",
+  "rt_lmp_price": {
+    "id": 10,
+    "ancillaries_price": 1.7129,
+    "capacity_price": 0.1628,
+    "starts_on": "2018-12-01",
+    "ends_on": "2018-12-31",
+    "lmp_price": 36.6938,
+    "losses_price": 2.13445704,
+    "rps_price": 0.261,
+    "total_price": 41.4976248,
+    "transmission_ancillaries_price": -0.0086,
+    "transmission_price": 0.1653,
+  },
   "flow_start": null,
   "flow_end": null,
   "capacity_tags": [
@@ -380,15 +392,16 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/shadow_prices?dat
 [
   {
     "ancillaries_price": 1.7129,
-      "capacity_price": 0.1628,
-      "hour": 1,
-      "lmp_price": 37.0501,
-      "losses_price": 2.1541248,
-      "price_date": "2018-12-01",
-      "rps_price": 0.261,
-      "transmission_ancillaries_price": -0.0086,
-      "transmission_price": 0.1653,
-      "volume_kwh": 1033.31759618779
+    "capacity_price": 0.1628,
+    "hour": 1,
+    "lmp_price": 37.0501,
+    "losses_price": 2.1541248,
+    "price_date": "2018-12-01",
+    "rps_price": 0.261,
+    "total_price": 41.4976248,
+    "transmission_ancillaries_price": -0.0086,
+    "transmission_price": 0.1653,
+    "volume_kwh": 1033.31759618779
   },
   {
     "ancillaries_price": 1.7129,
@@ -398,6 +411,7 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/shadow_prices?dat
     "losses_price": 2.13445704,
     "price_date": "2018-12-01",
     "rps_price": 0.261,
+    "total_price": 41.4976248,
     "transmission_ancillaries_price": -0.0086,
     "transmission_price": 0.1653,
     "volume_kwh": 1033.31759618779
@@ -429,6 +443,7 @@ The response is an array of 24 objects, one for each hour of the day
 | lmp_price                      | The RT LMP price for the hour                   |
 | losses_price                   | The losses price for the hour                   |
 | rps_price                      | The renewable power source price for the hour   |
+| total_price                    | The sum of the other price components           |
 | transmission_ancillaries_price | The transmission ancillaries price for the hour |
 | transmission_price             | The transmission price for the hour             |
 | volume_kwh                     | The volume in kwh for the hour                  |
