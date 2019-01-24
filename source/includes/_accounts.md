@@ -20,6 +20,7 @@ curl -X POST "http://truelight.herokuapp.com/api/accounts"
 ```json
 {
   "id": 1,
+  "account_number": 1234,
   "status": "active",
   "intervalization_status": "usageless",
   "rt_lmp_price": null,
@@ -124,6 +125,7 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 ```json
 {
   "id": 1,
+  "account_number": 1234,
   "status": "active",
   "intervalization_status": "intervalized",
   "rt_lmp_price": {
@@ -175,6 +177,7 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 | Parameter                    | Description                                            |
 | ---------------------------- | ------------------------------------------------------ |
 | id                           | The ID of the account                                  |
+| account_number               | The account number                                     |
 | status                       | The account status ("active" or "inactive")            |
 | intervalization_status       | The intervalization status of the account (more below) |
 | rt_lmp_price                 | The RT LMP prices the account                          |
@@ -224,6 +227,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 ```json
 {
   "id": 1,
+  "account_number": 1234,
   "status": "active",
   "intervalization_status": "intervalizing",
   "rt_lmp_price": null,
@@ -299,6 +303,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 | Parameter                    | Description                                            |
 | ---------------------------- | ------------------------------------------------------ |
 | id                           | The ID of the account                                  |
+| account_number               | The account number                                     |
 | status                       | The account status ("active" or "inactive")            |
 | intervalization_status       | The intervalization status of the account (more below) |
 | rt_lmp_price                 | The RT LMP prices the account                          |
@@ -333,6 +338,7 @@ status: "inactive" } }'
 ```json
 {
   "id": 1,
+  "account_number": 1234,
   "status": "inactive",
   "intervalization_status": "intervalizing",
   "rt_lmp_price": null,
