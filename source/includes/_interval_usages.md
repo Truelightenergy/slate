@@ -4,7 +4,7 @@
 
 ```shell
 curl -X POST
-"http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/interval_usages"
+"http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>/interval_usages"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "interval_usages": [{
 "recorded_on": "2019-01-14", "hour": "1", "volume_kwh": "10.14" }, { "recorded_on":
@@ -34,7 +34,7 @@ This endpoint creates interval usages for an account
 
 ### HTTP Request
 
-`POST http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/interval_usages`
+`POST http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>/interval_usages`
 
 ### Parameters
 
