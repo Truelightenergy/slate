@@ -65,6 +65,7 @@ This endpoint creates an account
 | ---------------------------- | -------- | ------- | ---------------------------------------------------- |
 | account_number               | true     | N/A     | The account number                                   |
 | location                     | true     | N/A     | The address lines 1 & 2 for the account              |
+| city                         | true     | N/A     | The account city                                     |
 | state                        | true     | N/A     | The account geographic state's 2 digit abbreviation  |
 | load_zone                    | true     | N/A     | The account's load zone                              |
 | utility                      | true     | N/A     | The account's utility                                |
