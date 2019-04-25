@@ -5,7 +5,7 @@ by the Truelight team.
 
 ```shell
 curl -X GET -H "Authorization: Token token=MY_TRUELIGHT_TOKEN" -H "Cache-Control:
-no-cache" "http://truelight.herokuapp.com/api/accounts"
+no-cache" "http://truelight.herokuapp.com/api/v1/accounts"
 ```
 
 > Make sure to replace `MY_TRUELIGHT_TOKEN` with your API token.

@@ -3,7 +3,7 @@
 ## Create an account
 
 ```shell
-curl -X POST "http://truelight.herokuapp.com/api/accounts"
+curl -X POST "http://truelight.herokuapp.com/api/v1/accounts"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": { "account_number":
 "1234", "location": "11 Beacon St.", "city": "Philadelphia", "state":
@@ -57,7 +57,7 @@ This endpoint creates an account
 
 ### HTTP Request
 
-`POST http://truelight.herokuapp.com/api/accounts`
+`POST http://truelight.herokuapp.com/api/v1/accounts`
 
 ### Parameters
 
@@ -115,7 +115,7 @@ An unsuccessful POST will return an HTTP 422 and validation error
 This endpoint returns an individual account
 
 ```shell
-curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
+curl "http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>"
   -H "Authorization: Token token=MY_TRUELIGHT_TOKEN"
 ```
 
@@ -165,7 +165,7 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
 
 ### HTTP Request
 
-`GET http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>`
+`GET http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>`
 
 ### URL Parameters
 
@@ -213,7 +213,7 @@ An unsuccessful GET will return an HTTP 404
 This endpoint updates an individual account
 
 ```shell
-curl -X PATCH "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
+curl -X PATCH "http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": {
 summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
@@ -255,7 +255,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 
 ### HTTP Request
 
-`PATCH http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>`
+`PATCH http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>`
 
 ### Parameters
 
@@ -326,7 +326,7 @@ An unsuccessful PATCH will return an HTTP 422 and validation error
 This endpoint de-activates an account
 
 ```shell
-curl -X PATCH "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>"
+curl -X PATCH "http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": {
 status: "inactive" } }'
@@ -366,7 +366,7 @@ status: "inactive" } }'
 
 ### HTTP Request
 
-`PATCH http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>`
+`PATCH http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>`
 
 ### URL Parameters
 
@@ -387,7 +387,7 @@ An unsuccessful PATCH will return an HTTP 422 and validation error
 This endpoint returns the shadow prices for an individual account
 
 ```shell
-curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/shadow_prices?date=<DATE>"
+curl "http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>/shadow_prices?date=<DATE>"
   -H "Authorization: Token token=MY_TRUELIGHT_TOKEN"
 ```
 
@@ -428,7 +428,7 @@ curl "http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/shadow_prices?dat
 
 ### HTTP Request
 
-`GET http://truelight.herokuapp.com/api/accounts/<ACCOUNT_ID>/shadow_prices<?date=DATE>`
+`GET http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>/shadow_prices<?date=DATE>`
 
 ### URL Parameters
 
