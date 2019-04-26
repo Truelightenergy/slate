@@ -8,7 +8,7 @@ curl -X POST "http://truelight.herokuapp.com/api/v1/accounts"
   --header "Content-Type: application/json" -d '{ "account": { "account_number":
 "1234", "location": "11 Beacon St.", "city": "Philadelphia", "state":
 "PA", "load_zone": "APS-PA", "utility": "WPP", "load_profile": "GPC",
-"voltage": "Primary", "rate_class": "10", "summary_usage_attributes": [{ "starts_on":
+"voltage": "Primary", "rate_class": "10", "summary_usages_attributes": [{ "starts_on":
 "2018-10-1", "ends_on": "2018-10-31", "volume_kwh": "925.24"}],
 "capacity_tags_attributes": [{ "start_date": "2018-6-1", "end_date": "2019-5-31",
 "value_kw": "60000" }], "transmission_tags_attributes": [{ "start_date":
@@ -72,7 +72,7 @@ This endpoint creates an account
 | load_profile                 | true     | N/A     | The account's load profile                           |
 | voltage                      | true     | N/A     | The account's voltage                                |
 | rate_class                   | true     | N/A     | The account's rate class                             |
-| summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
+| summary_usages_attributes    | false    | N/A     | An array of summary usage parameters (more below)    |
 | capacity_tags_attributes     | true     | N/A     | An array of capacity tag parameters (more below)     |
 | transmission_tags_attributes | true     | N/A     | An array of transmission tag parameters (more below) |
 | flow_start                   | false    | N/A     | The account's flow start date (YYYY-M-D)             |
@@ -216,7 +216,7 @@ This endpoint updates an individual account
 curl -X PATCH "http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>"
   --header "Authorization: Token token=MY_TRUELIGHT_TOKEN"
   --header "Content-Type: application/json" -d '{ "account": {
-summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
+summary_usages_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 "volume_kwh": "914.87" }, { "starts_on": "2018-10-1", "ends_on": "2018-10-31",
 "volume_kwh": "925.24"}] } }'
 ```
@@ -269,7 +269,7 @@ summary_usage_attributes: [{ "starts_on": "2018-9-1", "ends_on": "2018-9-31",
 | load_profile                 | false    | N/A     | The account's load profile                           |
 | voltage                      | false    | N/A     | The account's voltage                                |
 | rate_class                   | false    | N/A     | The account's rate class                             |
-| summary_usage_attributes     | false    | N/A     | An array of summary usage parameters (more below)    |
+| summary_usages_attributes    | false    | N/A     | An array of summary usage parameters (more below)    |
 | capacity_tags_attributes     | false    | N/A     | An array of capacity tag parameters (more below)     |
 | transmission_tags_attributes | false    | N/A     | An array of transmission tag parameters (more below) |
 | flow_start                   | false    | N/A     | The account's flow start date (YYYY-M-D)             |
