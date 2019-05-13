@@ -28,8 +28,9 @@ curl -X GET \
 ]
 ```
 
-This endpoint retrieves actual hourly records for the given date.
-If no date is passed, the most recent day of actual hourly records is returned.
+This endpoint retrieves actual hourly records for the given date. An "Actual Hourly" is similar to a shadow price, but instead of using projected prices for the given date range, actual hourlies use usage data from a previous billing period and thus use "actual" usages instead of projected usages.
+
+If no date is passed, the last 24 actual hourly records (equivalent to one day) for the account are returned.
 
 ### HTTP Request
 
