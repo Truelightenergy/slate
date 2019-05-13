@@ -33,7 +33,7 @@ If no date is passed, the most recent day of actual hourly records is returned.
 
 ### HTTP Request
 
-`POST http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>/actual_hourlies?date=<DATE>`
+`GET http://truelight.herokuapp.com/api/v1/accounts/<ACCOUNT_ID>/actual_hourlies?date=<DATE>`
 
 ### URL Parameters
 
