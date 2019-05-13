@@ -7,6 +7,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
 includes:
   - authentication
   - accounts
+  - actual_hourlies
   - interval_usages
   - errors
 
