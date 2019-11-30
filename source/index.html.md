@@ -8,6 +8,7 @@ includes:
   - authentication
   - accounts
   - interval_usages
+  - actual_hourlies
   - errors
 
 search: true
