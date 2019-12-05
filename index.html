@@ -230,6 +230,34 @@
                   <li>
                     <a href="#create-an-account" class="toc-h2 toc-link" data-title="Create an account">Create an account</a>
                   </li>
+                  <li>
+                    <a href="#get-a-specific-account" class="toc-h2 toc-link" data-title="Get a specific account">Get a specific account</a>
+                  </li>
+                  <li>
+                    <a href="#update-a-specific-account" class="toc-h2 toc-link" data-title="Update a specific account">Update a specific account</a>
+                  </li>
+                  <li>
+                    <a href="#de-activate-an-account" class="toc-h2 toc-link" data-title="De-activate an account">De-activate an account</a>
+                  </li>
+                  <li>
+                    <a href="#get-account-shadow-prices" class="toc-h2 toc-link" data-title="Get account shadow prices">Get account shadow prices</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#interval-usages" class="toc-h1 toc-link" data-title="Interval Usages">Interval Usages</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#add-interval-usages-to-an-account" class="toc-h2 toc-link" data-title="Add interval usages to an account">Add interval usages to an account</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#actual-hourlies" class="toc-h1 toc-link" data-title="Actual Hourlies">Actual Hourlies</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-account-actual-hourlies" class="toc-h2 toc-link" data-title="Get account actual hourlies">Get account actual hourlies</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -242,12 +270,12 @@
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
 <p>The Truelight Energy API is a simple, REST API that allows clients to send
-account and usage data as well as receive account pricing information.</p>
+Account usage data and receive Account pricing data.</p>
 <h1 id='authentication'>Authentication</h1>
 <p>All API requests require an API token in the header. The token will be provided
 by the Truelight team.</p>
 <pre class="highlight shell tab-shell"><code>curl -X GET -H <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span> -H <span class="s2">"Cache-Control:
-no-cache"</span> <span class="s2">"https://truelight.com/api/accounts"</span>
+no-cache"</span> <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts"</span>
 </code></pre>
 <blockquote>
 <p>Make sure to replace <code>MY_TRUELIGHT_TOKEN</code> with your API token.</p>
@@ -261,28 +289,176 @@ server in a header that looks like the following:</p>
 <aside class="notice">
 You must replace <code>MY_TRUELIGHT_TOKEN</code> with your personal API token.
 </aside>
-<h1 id='accounts'>Accounts</h1><h2 id='create-an-account'>Create an account</h2><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s2">"https://truelight.com/api/accounts"</span>
+<h1 id='accounts'>Accounts</h1><h2 id='create-an-account'>Create an account</h2><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts"</span>
   --header <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
-  --header <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{ "account": { "number":
-"1234", "location": "11 Beacon St.", "state":
-"MA", "load_zone": "SEMASS", "utility": "MECO", "load_profile": "G-3",
-"voltage": "Primary", "rate_class": "R-1", "capacity_tag_kw": "60000",
-"transmission_tag_kw": "100000" } }'</span>
+  --header <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{"account": {"account_number":
+  "abc123", "rep": "xyz", "location": "11 Beacon St.", "city": "Philadelphia",
+  "state": "PA", "load_zone": "APS-PA", "utility": "WPP", "load_profile": "GPC",
+  "voltage": "Primary", "rate_class": "10", "summary_usages_attributes": [{"starts_on":
+  "2018-10-1", "ends_on": "2018-10-31", "volume_kwh": "925.24"}], "capacity_tags_attributes":
+  [{"start_date": "2018-6-1", "end_date": "2019-5-31", "value_kw": "60000"}],
+  "transmission_tags_attributes": [{"start_date": "2018-1-1", "end_date": "2018-12-31", "value_kw": "100000"}]}}'</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"usageless"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">114468</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11 Beacon St."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Philadelphia"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_zone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APS-PA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"utility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WPP"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GPC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rate_class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"voltage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Primary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xyz"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_end"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_start"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"intervalization_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"awaiting_intervalization"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rt_lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"capacity_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">60000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"transmission_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"summary_usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">925.24</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>A validation failure with return an error payload</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"load_profile"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"is not included in the utility's load profiles"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint creates an account</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://truelight.com/api/accounts</code></p>
+<p><code>POST http://truelight.herokuapp.com/api/v1/accounts</code></p>
 <h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account id</td>
+</tr>
+<tr>
+<td>account_number</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account number</td>
+</tr>
+<tr>
+<td>location</td>
+<td>true</td>
+<td>N/A</td>
+<td>The address lines 1 &amp; 2 for the account</td>
+</tr>
+<tr>
+<td>city</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account city</td>
+</tr>
+<tr>
+<td>state</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account geographic state&#39;s 2 digit abbreviation</td>
+</tr>
+<tr>
+<td>load_zone</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account&#39;s load zone</td>
+</tr>
+<tr>
+<td>utility</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account&#39;s utility</td>
+</tr>
+<tr>
+<td>load_profile</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account&#39;s load profile</td>
+</tr>
+<tr>
+<td>voltage</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account&#39;s voltage</td>
+</tr>
+<tr>
+<td>rep</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s rep</td>
+</tr>
+<tr>
+<td>rate_class</td>
+<td>true</td>
+<td>N/A</td>
+<td>The account&#39;s rate class</td>
+</tr>
+<tr>
+<td>summary_usages_attributes</td>
+<td>false</td>
+<td>N/A</td>
+<td>An array of summary usage parameters (more below)</td>
+</tr>
+<tr>
+<td>capacity_tags_attributes</td>
+<td>true</td>
+<td>N/A</td>
+<td>An array of capacity tag parameters (more below)</td>
+</tr>
+<tr>
+<td>transmission_tags_attributes</td>
+<td>true</td>
+<td>N/A</td>
+<td>An array of transmission tag parameters (more below)</td>
+</tr>
+<tr>
+<td>flow_start</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s flow start date (YYYY-M-D)</td>
+</tr>
+<tr>
+<td>flow_end</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s flow end date (YYYY-M-D)</td>
+</tr>
+</tbody></table>
+<h3 id='summary-usage-parameters'>Summary Usage Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -291,59 +467,962 @@ You must replace <code>MY_TRUELIGHT_TOKEN</code> with your personal API token.
 </tr>
 </thead><tbody>
 <tr>
-<td>number</td>
+<td>starts_on</td>
 <td>true</td>
-<td>The account number</td>
+<td>The date the usage starts on in format &quot;YYYY-M-D&quot;</td>
 </tr>
 <tr>
-<td>location</td>
+<td>ends_on</td>
 <td>true</td>
-<td>The address lines 1 &amp; 2 for the account</td>
+<td>The date the usage ends on in format &quot;YYYY-M-D&quot;</td>
 </tr>
 <tr>
-<td>state</td>
+<td>volume_kwh</td>
 <td>true</td>
-<td>The account geographic state&#39;s 2 digit abbreviation</td>
+<td>The volume in kWh during the usage period</td>
 </tr>
+</tbody></table>
+<h3 id='capacity-tag-parameters'>Capacity Tag Parameters</h3>
+<table><thead>
 <tr>
-<td>load_zone</td>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start_date</td>
 <td>true</td>
-<td>The account&#39;s load zone</td>
+<td>The date the tag starts on in format &quot;YYYY-M-D&quot;</td>
 </tr>
 <tr>
-<td>utility</td>
+<td>end_date</td>
 <td>true</td>
-<td>The account&#39;s utility</td>
+<td>The date the tag ends on in format &quot;YYYY-M-D&quot;</td>
 </tr>
 <tr>
-<td>load_profile</td>
+<td>value_kw</td>
 <td>true</td>
-<td>The account&#39;s load profile</td>
+<td>The value of the tag in kw</td>
 </tr>
+</tbody></table>
+<h3 id='transmission-tag-parameters'>Transmission Tag Parameters</h3>
+<table><thead>
 <tr>
-<td>voltage</td>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start_date</td>
 <td>true</td>
-<td>The account&#39;s voltage</td>
+<td>The date the tag starts on in format &quot;YYYY-M-D&quot;</td>
 </tr>
 <tr>
-<td>rate_class</td>
+<td>end_date</td>
 <td>true</td>
-<td>The account&#39;s rate class</td>
+<td>The date the tag ends on in format &quot;YYYY-M-D&quot;</td>
 </tr>
 <tr>
-<td>capacity_tag_kw</td>
-<td>false</td>
-<td>The account&#39;s capacity tag in kWh</td>
-</tr>
-<tr>
-<td>transmission_tag_kw</td>
-<td>false</td>
-<td>The account&#39;s transmission tag in kWh</td>
+<td>value_kw</td>
+<td>true</td>
+<td>The value of the tag in kw</td>
 </tr>
 </tbody></table>
 
 <aside class="success">
 A successful POST will return an HTTP 201
+</aside>
+
+<aside class="warning">
+An unsuccessful POST will return an HTTP 422 and validation error
+</aside>
+<h2 id='get-a-specific-account'>Get a specific account</h2>
+<p>This endpoint returns an individual account</p>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;"</span>
+  -H <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+</code></pre>
+<blockquote>
+<p>Make sure you replace <code>MY_TRUELIGHT_TOKEN</code> with your API token</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcde"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABCD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABCD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_zone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APS-PA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"utility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WPP"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GPC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rate_class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"voltage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Primary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcd"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_end"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-15"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"intervalization_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"intervalized"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rt_lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15317</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-02"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30.8038"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.9942"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.6722"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.2298"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0174"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="s2">"39.6606"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1971"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.2539"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"capacity_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-06-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">554</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"transmission_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"summary_usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">925.24</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ACCOUNT_ID</td>
+<td>The ID of the Account to retrieve</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_number</td>
+<td>The account number</td>
+</tr>
+<tr>
+<td>location</td>
+<td>The account location</td>
+</tr>
+<tr>
+<td>city</td>
+<td>The account city</td>
+</tr>
+<tr>
+<td>state</td>
+<td>The account state</td>
+</tr>
+<tr>
+<td>load_zone</td>
+<td>The account load_zone</td>
+</tr>
+<tr>
+<td>utility</td>
+<td>The account utility</td>
+</tr>
+<tr>
+<td>load_profile</td>
+<td>The account load_profile</td>
+</tr>
+<tr>
+<td>rate_class</td>
+<td>The account rate_class</td>
+</tr>
+<tr>
+<td>voltage</td>
+<td>The account voltage</td>
+</tr>
+<tr>
+<td>rep</td>
+<td>The account rep</td>
+</tr>
+<tr>
+<td>status</td>
+<td>The account status (&quot;active&quot; or &quot;inactive&quot;)</td>
+</tr>
+<tr>
+<td>intervalization_status</td>
+<td>The intervalization status of the account (more below)</td>
+</tr>
+<tr>
+<td>rt_lmp_price</td>
+<td>The RT LMP prices the account</td>
+</tr>
+<tr>
+<td>flow_start</td>
+<td>The account&#39;s flow start date</td>
+</tr>
+<tr>
+<td>flow_end</td>
+<td>The account&#39;s flow end date</td>
+</tr>
+<tr>
+<td>capacity_tags</td>
+<td>An array of the account&#39;s capacity tags</td>
+</tr>
+<tr>
+<td>transmission_tags</td>
+<td>An array of the account&#39;s transmission tags</td>
+</tr>
+<tr>
+<td>summary_usages</td>
+<td>An array of the account&#39;s summary usages</td>
+</tr>
+</tbody></table>
+<h3 id='account-intervalization-status'>Account intervalization status</h3>
+<p>The account&#39;s intervalization status can be one of &quot;usageless&quot;, &quot;intervalizing&quot;,
+&quot;intervalized&quot;, or &quot;intervalization_error&quot;.</p>
+
+<ul>
+<li>If we have no usage data the intervalization status is
+&quot;usageless&quot;.</li>
+<li>If we&#39;re currently creating interval usage data in the background the
+intervalization status is &quot;intervalizing&quot;.</li>
+<li>If we have interval usage data the intervalization status is
+&quot;intervalized&quot;.</li>
+<li>Finally, if there was an error generating the interval data the
+intervalization status is &quot;intervalization_error&quot;.</li>
+</ul>
+
+<aside class="success">
+A successful GET will return an HTTP 200
+</aside>
+
+<aside class="warning">
+An unsuccessful GET will return an HTTP 404
+</aside>
+<h2 id='update-a-specific-account'>Update a specific account</h2>
+<p>This endpoint updates an individual account</p>
+<pre class="highlight shell tab-shell"><code>curl -X PATCH <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;"</span>
+  --header <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+  --header <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{ "account": {
+    "rep": "abcde", "location": "Costa Rica", "city": "Costa Rica",
+    "summary_usages_attributes": [ { "starts_on": "2018-01-04", "ends_on":
+    "2018-01-04", "volume_kwh": 925.24 } ], "capacity_tags": [ {
+    "start_date": "2018-06-01", "end_date": "2019-05-31", "value_kw": 60000 }
+    ],"transmission_tags": [ { "start_date": "2018-01-01", "end_date": "2018-12-31",
+    "value_kw": 100000 } ] } }'</span>
+</code></pre>
+<blockquote>
+<p>Make sure you replace <code>MY_TRUELIGHT_TOKEN</code> with your API token</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcd"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Costa Rica"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Costa Rica"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_zone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"APS-PA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"utility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WPP"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GPC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rate_class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"voltage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Primary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcd"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_end"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_start"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"intervalization_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"intervalized"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rt_lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15322</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"146.5884"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1666"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3397"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11297.1769"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.3132"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16513.4254"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5558.266"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-500.4254"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"capacity_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">60000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"transmission_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"summary_usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">925.24</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-3'>HTTP Request</h3>
+<p><code>PATCH http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;</code></p>
+<h3 id='parameters-2'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_number</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account number</td>
+</tr>
+<tr>
+<td>location</td>
+<td>false</td>
+<td>N/A</td>
+<td>The address lines 1 &amp; 2 for the account</td>
+</tr>
+<tr>
+<td>city</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s city</td>
+</tr>
+<tr>
+<td>state</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account geographic state&#39;s 2 digit abbreviation</td>
+</tr>
+<tr>
+<td>load_zone</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s load zone</td>
+</tr>
+<tr>
+<td>utility</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s utility</td>
+</tr>
+<tr>
+<td>load_profile</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s load profile</td>
+</tr>
+<tr>
+<td>rate_class</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s rate class</td>
+</tr>
+<tr>
+<td>voltage</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s voltage</td>
+</tr>
+<tr>
+<td>rep</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s rep</td>
+</tr>
+<tr>
+<td>summary_usages_attributes</td>
+<td>false</td>
+<td>N/A</td>
+<td>An array of summary usage parameters (more below)</td>
+</tr>
+<tr>
+<td>capacity_tags_attributes</td>
+<td>false</td>
+<td>N/A</td>
+<td>An array of capacity tag parameters (more below)</td>
+</tr>
+<tr>
+<td>transmission_tags_attributes</td>
+<td>false</td>
+<td>N/A</td>
+<td>An array of transmission tag parameters (more below)</td>
+</tr>
+<tr>
+<td>flow_start</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s flow start date (YYYY-M-D)</td>
+</tr>
+<tr>
+<td>flow_end</td>
+<td>false</td>
+<td>N/A</td>
+<td>The account&#39;s flow end date (YYYY-M-D)</td>
+</tr>
+</tbody></table>
+<h3 id='summary-usage-parameters-2'>Summary Usage Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>starts_on</td>
+<td>true</td>
+<td>The date the usage starts on in format &quot;YYYY-M-D&quot;</td>
+</tr>
+<tr>
+<td>ends_on</td>
+<td>true</td>
+<td>The date the usage ends on in format &quot;YYYY-M-D&quot;</td>
+</tr>
+<tr>
+<td>volume_kwh</td>
+<td>true</td>
+<td>The volume in kWh during the usage period</td>
+</tr>
+</tbody></table>
+<h3 id='capacity-tag-parameters-2'>Capacity Tag Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start_date</td>
+<td>true</td>
+<td>The date the tag starts on in format &quot;YYYY-M-D&quot;</td>
+</tr>
+<tr>
+<td>end_date</td>
+<td>true</td>
+<td>The date the tag ends on in format &quot;YYYY-M-D&quot;</td>
+</tr>
+<tr>
+<td>value_kw</td>
+<td>true</td>
+<td>The value of the tag in kw</td>
+</tr>
+</tbody></table>
+<h3 id='transmission-tag-parameters-2'>Transmission Tag Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start_date</td>
+<td>true</td>
+<td>The date the tag starts on in format &quot;YYYY-M-D&quot;</td>
+</tr>
+<tr>
+<td>end_date</td>
+<td>true</td>
+<td>The date the tag ends on in format &quot;YYYY-M-D&quot;</td>
+</tr>
+<tr>
+<td>value_kw</td>
+<td>true</td>
+<td>The value of the tag in kw</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-2'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_number</td>
+<td>The account number</td>
+</tr>
+<tr>
+<td>location</td>
+<td>The account location</td>
+</tr>
+<tr>
+<td>city</td>
+<td>The account city</td>
+</tr>
+<tr>
+<td>state</td>
+<td>The account state</td>
+</tr>
+<tr>
+<td>load zone</td>
+<td>The account load zone</td>
+</tr>
+<tr>
+<td>load profile</td>
+<td>The account load profile</td>
+</tr>
+<tr>
+<td>utility</td>
+<td>The account utility</td>
+</tr>
+<tr>
+<td>voltage</td>
+<td>The account voltage</td>
+</tr>
+<tr>
+<td>rep</td>
+<td>The account rep</td>
+</tr>
+<tr>
+<td>rate class</td>
+<td>The account rate class</td>
+</tr>
+<tr>
+<td>status</td>
+<td>The account status (&quot;active&quot; or &quot;inactive&quot;)</td>
+</tr>
+<tr>
+<td>intervalization_status</td>
+<td>The intervalization status of the account (more below)</td>
+</tr>
+<tr>
+<td>rt_lmp_price</td>
+<td>The RT LMP prices the account</td>
+</tr>
+<tr>
+<td>flow_start</td>
+<td>The account&#39;s flow start date</td>
+</tr>
+<tr>
+<td>flow_end</td>
+<td>The account&#39;s flow end date</td>
+</tr>
+<tr>
+<td>capacity_tags</td>
+<td>An array of the account&#39;s capacity tags</td>
+</tr>
+<tr>
+<td>transmission_tags</td>
+<td>An array of the account&#39;s transmission tags</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+A successful PATCH will return an HTTP 200
+</aside>
+
+<aside class="warning">
+An unsuccessful PATCH will return an HTTP 422 and validation error
+</aside>
+<h2 id='de-activate-an-account'>De-activate an account</h2>
+<p>This endpoint de-activates an account</p>
+<pre class="highlight shell tab-shell"><code>curl -X PATCH <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;"</span>
+  --header <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+  --header <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{ "account": {
+status: "inactive" } }'</span>
+</code></pre>
+<blockquote>
+<p>Make sure you replace <code>MY_TRUELIGHT_TOKEN</code> with your API token</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcd"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20 W 34th St"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NY"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_zone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"H"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"utility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONED"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"load_profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66 Strata 7"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rate_class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SC 1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"voltage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LV"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abcd"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_end"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"flow_start"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"intervalization_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"awaiting_intervalization"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rt_lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15322</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-04"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"146.5884"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1666"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3397"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11297.1769"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.3132"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16513.4254"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5558.266"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-500.4254"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"capacity_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-12-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">55</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"transmission_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"start_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"end_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-31"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value_kw"</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"summary_usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-07-01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-07-08"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
+<p><code>PATCH http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>false</td>
+<td>&quot;active&quot;</td>
+<td>The account status (&quot;active&quot; or &quot;inactive&quot;)</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+A successful PATCH will return an HTTP 200
+</aside>
+
+<aside class="warning">
+An unsuccessful PATCH will return an HTTP 422 and validation error
+</aside>
+<h2 id='get-account-shadow-prices'>Get account shadow prices</h2>
+<p>This endpoint returns the shadow prices for an individual account</p>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;/shadow_prices?date=&lt;DATE&gt;"</span>
+  -H <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+</code></pre>
+<blockquote>
+<p>Make sure you replace <code>MY_TRUELIGHT_TOKEN</code> with your API token</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7129</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1628</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hour"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">37.0501</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.1541248</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"price_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.261</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.4976248</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0086</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1653</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">1033.31759618779</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7129</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1628</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hour"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">36.6938</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.13445704</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"price_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.261</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.4976248</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0086</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1653</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">1033.31759618779</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;/shadow_prices&lt;?date=DATE&gt;</code></p>
+<h3 id='url-parameters-3'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ACCOUNT_ID</td>
+<td>The ID of the Account to retrieve</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>date</td>
+<td>The date of the shadow prices (YYYY-M-D)</td>
+<td>Yesterday</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters-3'>Response Parameters</h3>
+<p>The response is an array of 24 objects, one for each hour of the day</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>price_date</td>
+<td>The date for the shadow price</td>
+</tr>
+<tr>
+<td>hour</td>
+<td>The hour of the day</td>
+</tr>
+<tr>
+<td>ancillaries_price</td>
+<td>The ancillaries price for the hour</td>
+</tr>
+<tr>
+<td>capacity_price</td>
+<td>The capacity price for the hour</td>
+</tr>
+<tr>
+<td>lmp_price</td>
+<td>The RT LMP price for the hour</td>
+</tr>
+<tr>
+<td>losses_price</td>
+<td>The losses price for the hour</td>
+</tr>
+<tr>
+<td>rps_price</td>
+<td>The renewable power source price for the hour</td>
+</tr>
+<tr>
+<td>total_price_per_mwh</td>
+<td>The sum of the other price components</td>
+</tr>
+<tr>
+<td>transmission_ancillaries_price</td>
+<td>The transmission ancillaries price for the hour</td>
+</tr>
+<tr>
+<td>transmission_price</td>
+<td>The transmission price for the hour</td>
+</tr>
+<tr>
+<td>volume_kwh</td>
+<td>The volume in kwh for the hour</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+A successful GET will return an HTTP 200
+</aside>
+
+<aside class="warning">
+An unsuccessful GET will return an HTTP 404
+</aside>
+<h1 id='interval-usages'>Interval Usages</h1><h2 id='add-interval-usages-to-an-account'>Add interval usages to an account</h2><pre class="highlight shell tab-shell"><code>curl -X POST
+<span class="s2">"http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;/interval_usages"</span>
+  --header <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+  --header <span class="s2">"Content-Type: application/json"</span> -d <span class="s1">'{ "interval_usages": [{
+"recorded_on": "2019-01-14", "hour": "1", "volume_kwh": "10.14" }, { "recorded_on":
+"2019-01-14", "hour": "2", "volume_kwh": "10.14" }] }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-04"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hour"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.14</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"recorded_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-04"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hour"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.14</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates interval usages for an account</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;/interval_usages</code></p>
+<h3 id='parameters'>Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>recorded_on</td>
+<td>false</td>
+<td>N/A</td>
+<td>The date the interval usage was recorded on (YYYY-M-D)</td>
+</tr>
+<tr>
+<td>hour</td>
+<td>false</td>
+<td>N/A</td>
+<td>The hour of the day for the interval usage</td>
+</tr>
+<tr>
+<td>volume_kwh</td>
+<td>false</td>
+<td>N/A</td>
+<td>The interval usage volume in KWH</td>
+</tr>
+</tbody></table>
+<h1 id='actual-hourlies'>Actual Hourlies</h1><h2 id='get-account-actual-hourlies'>Get account actual hourlies</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;/actual_hourlies?date=&lt;DATE&gt;"</span>
+  -H <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+</code></pre>
+<blockquote>
+<p>Make sure you replace <code>MY_TRUELIGHT_TOKEN</code> with your API token
+The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7129</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1628</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hour"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">37.0501</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.1541248</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"price_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.261</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.4976248</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0086</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1653</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">1033.31759618779</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7129</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1628</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hour"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">36.6938</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.13445704</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"price_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.261</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.4976248</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.0086</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1653</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"volume_kwh"</span><span class="p">:</span><span class="w"> </span><span class="mf">1033.31759618779</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint returns actual hourlies of an account</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET http://truelight.herokuapp.com/api/v1/accounts/&lt;ACCOUNT_ID&gt;/actual_hourlies&lt;?date=DATE&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ACCOUNT_ID</td>
+<td>The ID of the Account to retrieve</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>date</td>
+<td>The date of the shadow prices (YYYY-M-D)</td>
+<td>Yesterday</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters'>Response Parameters</h3>
+<p>The response is an array of 24 objects, one for each hour of the day</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>price_date</td>
+<td>The date for the shadow price</td>
+</tr>
+<tr>
+<td>hour</td>
+<td>The hour of the day</td>
+</tr>
+<tr>
+<td>ancillaries_price</td>
+<td>The ancillaries price for the hour</td>
+</tr>
+<tr>
+<td>capacity_price</td>
+<td>The capacity price for the hour</td>
+</tr>
+<tr>
+<td>lmp_price</td>
+<td>The RT LMP price for the hour</td>
+</tr>
+<tr>
+<td>losses_price</td>
+<td>The losses price for the hour</td>
+</tr>
+<tr>
+<td>rps_price</td>
+<td>The renewable power source price for the hour</td>
+</tr>
+<tr>
+<td>total_price_per_mwh</td>
+<td>The sum of the other price components</td>
+</tr>
+<tr>
+<td>transmission_ancillaries_price</td>
+<td>The transmission ancillaries price for the hour</td>
+</tr>
+<tr>
+<td>transmission_price</td>
+<td>The transmission price for the hour</td>
+</tr>
+<tr>
+<td>volume_kwh</td>
+<td>The volume in kwh for the hour</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+A successful GET will return an HTTP 200
+</aside>
+
+<aside class="warning">
+An unsuccessful GET will return an HTTP 404
 </aside>
 <h1 id='errors'>Errors</h1>
 <p>The Truelight API uses the following error codes:</p>
@@ -368,7 +1447,7 @@ A successful POST will return an HTTP 201
 </tr>
 <tr>
 <td>422</td>
-<td>Unprocessibly Entity -- Invalid resource, generally validation errors.</td>
+<td>Unprocessable Entity -- Invalid resource, generally validation errors.</td>
 </tr>
 <tr>
 <td>500</td>
