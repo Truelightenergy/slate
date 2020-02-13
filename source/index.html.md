@@ -9,6 +9,7 @@ includes:
   - accounts
   - interval_usages
   - actual_hourlies
+  - rt_lmp_prices
   - errors
 
 search: true

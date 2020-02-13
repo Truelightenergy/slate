@@ -245,6 +245,10 @@ A successful GET will return an HTTP 200
 An unsuccessful GET will return an HTTP 404
 </aside>
 
+<aside class="notice">
+An additional account number endpoint can use Griddy client
+</aside>
+
 ## Update a specific account
 
 This endpoint updates an individual account
