@@ -261,6 +261,14 @@
               </ul>
           </li>
           <li>
+            <a href="#rtlmpprices" class="toc-h1 toc-link" data-title="RtLmpPrices">RtLmpPrices</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-the-rtlmpprices-for-that-specific-summary-usage-period" class="toc-h2 toc-link" data-title="Get The RtLmpPrices for that specific summary usage period">Get The RtLmpPrices for that specific summary usage period</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -713,6 +721,10 @@ A successful GET will return an HTTP 200
 
 <aside class="warning">
 An unsuccessful GET will return an HTTP 404
+</aside>
+
+<aside class="notice">
+An additional account number endpoint can use Griddy client
 </aside>
 <h2 id='update-a-specific-account'>Update a specific account</h2>
 <p>This endpoint updates an individual account</p>
@@ -1424,6 +1436,97 @@ A successful GET will return an HTTP 200
 <aside class="warning">
 An unsuccessful GET will return an HTTP 404
 </aside>
+<h1 id='rtlmpprices'>RtLmpPrices</h1><h2 id='get-the-rtlmpprices-for-that-specific-summary-usage-period'>Get The RtLmpPrices for that specific summary usage period</h2>
+<p>This endpoint returns an rt_lmp_prices for summary usage&#39;s date period</p>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://truelight.herokuapp.com/api/v1/rt_lmp_prices/&lt;SUMMARY_USAGE_ID&gt;"</span>
+  -H <span class="s2">"Authorization: Token token=MY_TRUELIGHT_TOKEN"</span>
+</code></pre>
+<blockquote>
+<p>Make sure you replace <code>MY_TRUELIGHT_TOKEN</code> with your API token</p>
+
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">15316</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"starts_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-04-10"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ends_on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-09"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lmp_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"24.4265"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.6452"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rps_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.769"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"capacity_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69.784"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"losses_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.7069"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_price_per_mwh"</span><span class="p">:</span><span class="w"> </span><span class="s2">"159.403"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59.8526"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transmission_ancillaries_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1.7812"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre><h3 id='http-request'>HTTP Request</h3>
+<p><code>GET http://truelight.herokuapp.com/api/v1/rt_lmp_prices/&lt;SUMMARY_USAGE_ID&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SUMMARY_USAGE_ID</td>
+<td>The ID of the Summary Usage to retrieve</td>
+</tr>
+</tbody></table>
+<h3 id='response-parameters'>Response Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>The rt_lmp_price id</td>
+</tr>
+<tr>
+<td>starts_on</td>
+<td>The rt_lmp_price starts_on</td>
+</tr>
+<tr>
+<td>ends_on</td>
+<td>The rt_lmp_price ends_on</td>
+</tr>
+<tr>
+<td>lmp_price</td>
+<td>The rt_lmp_price lmp_price</td>
+</tr>
+<tr>
+<td>ancillaries_price</td>
+<td>The rt_lmp_price ancillaries_price</td>
+</tr>
+<tr>
+<td>rps_price</td>
+<td>The rt_lmp_price rps_price</td>
+</tr>
+<tr>
+<td>capacity_price</td>
+<td>The rt_lmp_price capacity_price</td>
+</tr>
+<tr>
+<td>losses_price</td>
+<td>The rt_lmp_price losses_price</td>
+</tr>
+<tr>
+<td>total_price_per_mwh</td>
+<td>The rt_lmp_price total_price_per_mwh</td>
+</tr>
+<tr>
+<td>transmission_price</td>
+<td>The rt_lmp_price transmission_price</td>
+</tr>
+<tr>
+<td>transmission_ancillaries_price</td>
+<td>The rt_lmp_price transmission_ancillaries_price</td>
+</tr>
+</tbody></table>
 <h1 id='errors'>Errors</h1>
 <p>The Truelight API uses the following error codes:</p>
 
